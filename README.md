@@ -1,7 +1,9 @@
 # Neffint
 Neffint is an acronym for **N**on-**e**quidistant **F**ilon **F**ourier **int**egration. This is a python package for computing Fourier integrals using a method based on Filon's rule with non-equidistant grid spacing.
 
-Neffint licensed under an Apache-2.0 license. See [HERE](https://www.apache.org/licenses/LICENSE-2.0) or the LICENSE file for details.
+Authors: Eskil Vik, Nicolas Mounet, Elena De La Fuente Garcia
+
+Neffint is licensed under an Apache-2.0 license. See [HERE](https://www.apache.org/licenses/LICENSE-2.0) or the LICENSE file for details.
 
 Documentation for the package is hosted at: https://neffint.readthedocs.io/en/latest
 

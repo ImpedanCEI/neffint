@@ -73,9 +73,9 @@ def _lambda(x: ArrayLike) -> np.ndarray:
         result[taylor_mask] += 1/(n+2) * jx_to_n * inv_factorial
         
         # Check convergence
+        min_component = np.min([np.abs(np.real(result[taylor_mask])), np.abs(np.imag(result[taylor_mask]))], axis=0)
         remaining_term_bound = abs_x_to_n_plus_1*exp_abs_x * inv_factorial * 1/((n+3)*(n+1))
-        # A component can vanish exactly (notably at x=0); use the complex magnitude.
-        if np.all(remaining_term_bound <= rel_tolerance * np.abs(result[taylor_mask])):
+        if np.all(remaining_term_bound <= rel_tolerance * min_component):
             break
         
         # Update variables
@@ -147,16 +147,18 @@ def _phi_and_psi(x: ArrayLike) -> Tuple[np.ndarray, np.ndarray]:
             phi[taylor_mask] += (n+6)/((n+3)*(n+4)) * jx_to_n * inv_factorial
 
             # Check for convergence
+            min_phi_component = np.min([np.abs(np.real(phi[taylor_mask])), np.abs(np.imag(phi[taylor_mask]))], axis=0)
             phi_remaining_terms_bound = 2 * abs_x_to_n_plus_1 * exp_abs_x * inv_factorial / ((n+1)*(n+5))
-            phi_converged = np.all(phi_remaining_terms_bound <= rel_tolerance * np.abs(phi[taylor_mask]))
+            phi_converged = np.all(phi_remaining_terms_bound <= rel_tolerance * min_phi_component)
         
         # Only calculate psi if not yet converged
         if not psi_converged:
             psi[taylor_mask] += - 1/((n+3)*(n+4)) * jx_to_n * inv_factorial
 
             # Check for convergence
+            min_psi_component = np.min([np.abs(np.real(psi[taylor_mask])), np.abs(np.imag(psi[taylor_mask]))], axis=0)
             psi_remaining_terms_bound = abs_x_to_n_plus_1 * exp_abs_x * inv_factorial / ((n+1)*(n+4)*(n+5))
-            psi_converged = np.all(psi_remaining_terms_bound <= rel_tolerance*np.abs(psi[taylor_mask]))
+            psi_converged = np.all(psi_remaining_terms_bound <= rel_tolerance*min_psi_component)
         
         # Update variables
         jx_to_n *= 1j*xx
